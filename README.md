@@ -42,4 +42,4 @@ Route.group(() => {
 
 This is a CRUD API with full Create, Read, Update, and Delete functionality.
 
-AdonisJS Auth is used for Authorization functionality.
+AdonisJS Auth is used for Authentication functionality.
