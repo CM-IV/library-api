@@ -21,7 +21,11 @@ export default class AuthController {
       schema: userSchema,
       messages: {
         required: "The {{ field }} is required to register a new account.",
+        confirmed: "The password fields do not match.",
+        "email.email": "Enter a valid email address",
         "email.unique": "That email is already in use",
+        "password.minLength":
+          "The minimum characters in your password must be greater than or equal to 5.",
       },
     });
 
@@ -38,9 +42,19 @@ export default class AuthController {
 
     try {
       const token = await auth.use("api").attempt(email, password);
-      return token;
+      return token.toJSON();
     } catch {
       return response.badRequest("Credentials are invalid!");
     }
+  }
+
+  public async logout({ response, auth }: HttpContextContract) {
+    await auth.use("api").revoke();
+
+    response.status(200);
+
+    return {
+      revoked: true,
+    };
   }
 }

@@ -28,6 +28,9 @@ Route.group(() => {
       "update",
       "destroy",
     ]);
+
+    //logout
+    Route.post("/logout", "AuthController.logout");
   }).middleware("auth");
 
   //get /books list
