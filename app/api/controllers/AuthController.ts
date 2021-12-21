@@ -6,13 +6,24 @@ export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
     const userSchema = schema.create({
       email: schema.string({ trim: true }, [
+        rules.required(),
         rules.email(),
         rules.unique({ table: "users", column: "email" }),
       ]),
-      password: schema.string({ trim: false }, [rules.confirmed()]),
+      password: schema.string({ trim: false }, [
+        rules.confirmed(),
+        rules.required(),
+        rules.minLength(5),
+      ]),
     });
 
-    const payload = await request.validate({ schema: userSchema });
+    const payload = await request.validate({
+      schema: userSchema,
+      messages: {
+        required: "The {{ field }} is required to register a new account.",
+        "email.unique": "That email is already in use",
+      },
+    });
 
     const user = await User.create(payload);
 
