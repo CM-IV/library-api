@@ -1,0 +1,62 @@
+import { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Book from "App/api/models/Book";
+import { schema } from "@ioc:Adonis/Core/Validator";
+
+export default class BooksController {
+  public async show({ params }: HttpContextContract) {
+    return Book.findOrFail(params.id);
+  }
+
+  public async index({}: HttpContextContract) {
+    return Book.all(); //select *
+  }
+
+  public async store({ request, response }: HttpContextContract) {
+    const bookSchema = schema.create({
+      title: schema.string({ trim: true }),
+      author: schema.string({ trim: true }),
+      publisher: schema.string({ trim: true }),
+      image: schema.string({ trim: true }),
+      description: schema.string({ trim: true }),
+      publish_year: schema.number(),
+    });
+
+    const payload = await request.validate({ schema: bookSchema });
+
+    const book = await Book.create(payload); //Create and save
+
+    response.status(201);
+
+    return book;
+  }
+
+  public async update({ response, params, request }: HttpContextContract) {
+    const book = await Book.findOrFail(params.id);
+
+    const bookSchema = schema.create({
+      title: schema.string({ trim: true }),
+      description: schema.string({ trim: true }),
+    });
+
+    const payload = await request.validate({ schema: bookSchema });
+
+    book.title = payload.title;
+    book.description = payload.description;
+
+    book.save();
+
+    response.status(200);
+
+    return `Book with ID ${params.id} was updated!`;
+  }
+
+  public async destroy({ params, response }: HttpContextContract) {
+    const book = await Book.findOrFail(params.id);
+
+    book.delete();
+
+    response.status(200);
+
+    return `Book with ID ${params.id} was deleted!`;
+  }
+}
