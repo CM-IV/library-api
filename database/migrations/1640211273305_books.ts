@@ -11,6 +11,12 @@ export default class Books extends BaseSchema {
       table.string("publisher", 50);
       table.string("image", 100);
       table.string("description", 150);
+      table
+        .integer("assigned_to")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("users");
       table.integer("publish_year");
 
       /**

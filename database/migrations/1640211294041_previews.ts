@@ -8,6 +8,12 @@ export default class Previews extends BaseSchema {
       table.increments("id");
       table.string("title", 75);
       table.string("image", 150);
+      table
+        .integer("assigned_to")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("users");
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
