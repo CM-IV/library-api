@@ -3,7 +3,7 @@ import User from "../models/User";
 import { schema, rules } from "@ioc:Adonis/Core/Validator";
 
 export default class AuthController {
-  public async register({ request, response }: HttpContextContract) {
+  public async register({ request, response, auth }: HttpContextContract) {
     const userSchema = schema.create({
       email: schema.string({ trim: true }, [
         rules.required(),
@@ -31,9 +31,9 @@ export default class AuthController {
 
     const user = await User.create(payload);
 
-    response.status(200);
+    await auth.login(user);
 
-    return response.created(user);
+    return response.json(user);
   }
 
   public async login({ request, response, auth }: HttpContextContract) {
@@ -56,5 +56,14 @@ export default class AuthController {
     return {
       revoked: true,
     };
+  }
+
+  public async show({ response }: HttpContextContract) {
+    const user = await User.query()
+      .where("role_id", 1)
+      .select("id")
+      .firstOrFail();
+
+    return response.json({ user });
   }
 }

@@ -18,6 +18,7 @@ export default class BooksController {
       publisher: schema.string({ trim: true }),
       image: schema.string({ trim: true }),
       description: schema.string({ trim: true }),
+      assigned_to: schema.number(),
       publish_year: schema.number(),
     });
 

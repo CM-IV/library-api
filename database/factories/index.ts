@@ -8,6 +8,7 @@ export const UserFactory = Factory.define(Book, ({ faker }) => {
     publisher: faker.lorem.words(2),
     image: faker.lorem.sentence(),
     description: faker.lorem.sentences(2),
+    assigned_to: faker.datatype.number(1),
     publish_year: faker.datatype.number({
       min: 1500,
       max: 2022,

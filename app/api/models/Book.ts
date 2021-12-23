@@ -5,8 +5,7 @@ import User from "./User";
 export default class Book extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
-  @column()
-  public assignedTo: number;
+
   @column()
   public title: string;
   @column()
@@ -17,6 +16,8 @@ export default class Book extends BaseModel {
   public image: string;
   @column()
   public description: string;
+  @column()
+  public assignedTo: number;
   @column()
   public publishYear: number;
 
