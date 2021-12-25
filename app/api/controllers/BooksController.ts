@@ -7,8 +7,12 @@ export default class BooksController {
     return Book.findOrFail(params.id);
   }
 
-  public async index({}: HttpContextContract) {
-    return Book.all(); //select *
+  public async index({ request }: HttpContextContract) {
+    const page = request.input("page", 1);
+
+    const limit = request.input("per_page", 4);
+
+    return Book.query().paginate(page, limit);
   }
 
   public async store({ request, response }: HttpContextContract) {
