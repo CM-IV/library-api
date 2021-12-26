@@ -9,8 +9,8 @@ export default class Books extends BaseSchema {
       table.string("title", 50);
       table.string("author", 50);
       table.string("publisher", 50);
-      table.string("image", 100);
-      table.string("description", 150);
+      table.string("image", 150);
+      table.string("description", 250);
       table
         .integer("assigned_to")
         .references("id")
