@@ -28,11 +28,9 @@ export default class BooksController {
 
     const payload = await request.validate({ schema: bookSchema });
 
-    const book = await Book.create(payload); //Create and save
+    await Book.create(payload); //Create and save
 
-    response.status(201);
-
-    return book;
+    return response.created();
   }
 
   public async update({ response, params, request }: HttpContextContract) {

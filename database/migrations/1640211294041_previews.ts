@@ -7,7 +7,8 @@ export default class Previews extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments("id");
       table.string("title", 75);
-      table.string("image", 150);
+      table.string("url", 150);
+      table.string("image", 200);
       table
         .integer("assigned_to")
         .unsigned()

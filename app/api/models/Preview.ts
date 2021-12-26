@@ -7,13 +7,16 @@ export default class Preview extends BaseModel {
   public id: number;
 
   @column()
-  public assignedTo: number;
-
-  @column()
   public title: string;
 
   @column()
+  public url: string;
+
+  @column()
   public image: string;
+
+  @column()
+  public assignedTo: number;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

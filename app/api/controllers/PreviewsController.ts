@@ -7,23 +7,27 @@ export default class PreviewsController {
     return Preview.findOrFail(params.id);
   }
 
-  public async index({}: HttpContextContract) {
-    return Preview.all();
+  public async index({ request }: HttpContextContract) {
+    const page = request.input("page", 1);
+
+    const limit = request.input("per_page", 4);
+
+    return Preview.query().paginate(page, limit);
   }
 
   public async store({ request, response }: HttpContextContract) {
     const previewSchema = schema.create({
       title: schema.string({ trim: false }),
       image: schema.string({ trim: true }),
+      url: schema.string({ trim: true }),
+      assigned_to: schema.number(),
     });
 
     const payload = await request.validate({ schema: previewSchema });
 
-    const preview = await Preview.create(payload);
+    await Preview.create(payload);
 
-    response.status(201);
-
-    return preview;
+    return response.created();
   }
 
   public async update({ response, params, request }: HttpContextContract) {
@@ -32,12 +36,14 @@ export default class PreviewsController {
     const previewSchema = schema.create({
       title: schema.string({ trim: false }),
       image: schema.string({ trim: true }),
+      url: schema.string({ trim: true }),
     });
 
     const payload = await request.validate({ schema: previewSchema });
 
     preview.title = payload.title;
     preview.image = payload.image;
+    preview.url = payload.url;
 
     preview.save();
 
