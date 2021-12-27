@@ -54,9 +54,7 @@ export default class BooksController {
 
     book.save();
 
-    response.status(200);
-
-    return `Book with ID ${params.id} was updated!`;
+    return response.json({ book });
   }
 
   public async destroy({ params, response }: HttpContextContract) {

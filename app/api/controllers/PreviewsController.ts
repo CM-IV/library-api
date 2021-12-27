@@ -47,9 +47,7 @@ export default class PreviewsController {
 
     preview.save();
 
-    response.status(200);
-
-    return `Preview with ID of ${params.id} was updated!`;
+    return response.json({ preview });
   }
 
   public async destroy({ params, response }: HttpContextContract) {
