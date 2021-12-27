@@ -38,12 +38,18 @@ export default class BooksController {
 
     const bookSchema = schema.create({
       title: schema.string({ trim: true }),
+      author: schema.string({ trim: true }),
+      publisher: schema.string({ trim: true }),
+      image: schema.string({ trim: true }),
       description: schema.string({ trim: true }),
     });
 
     const payload = await request.validate({ schema: bookSchema });
 
     book.title = payload.title;
+    book.author = payload.author;
+    book.publisher = payload.publisher;
+    book.image = payload.image;
     book.description = payload.description;
 
     book.save();
