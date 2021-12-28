@@ -1,7 +1,8 @@
-import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import BaseSeeder from "@ioc:Adonis/Lucid/Seeder";
+import { UserFactory } from "Database/factories";
 
 export default class BookSeeder extends BaseSeeder {
-  public async run () {
-    // Write your database queries inside the run method
+  public async run() {
+    await UserFactory.createMany(6);
   }
 }

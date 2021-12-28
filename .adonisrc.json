@@ -7,6 +7,9 @@
     "@adonisjs/lucid/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
+  "directories": {
+    "start": "./app/api/middleware"
+  },
   "namespaces": {
     "httpControllers": "App/api/controllers",
     "models": "App/api/models",
@@ -18,17 +21,12 @@
     "Database": "database",
     "Contracts": "contracts"
   },
-  "preloads": [
-    "./app/api/routes/routing",
-    "./app/api/middleware/kernel"
-  ],
+  "preloads": ["./app/api/routes/routing", "./app/api/middleware/kernel"],
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
     "@adonisjs/lucid",
     "@adonisjs/auth"
   ],
-  "aceProviders": [
-    "@adonisjs/repl"
-  ]
+  "aceProviders": ["@adonisjs/repl"]
 }
